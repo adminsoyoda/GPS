@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
+        xmlns:android   = "http://schemas.android.com/apk/res/android"
         id        = "com.phonegap.helloworld"
         version   = "1.0.0">
-
-    <name>SAC Lite</name>
+    <name>GPS</name>
     <description>
       Sistema de Asesoria Comercial
     </description>
@@ -39,21 +39,15 @@
     <plugin name="plugin_open_gps" source="npm" version="1.1.8" />
     <plugin name="cordova-plugin-file" version="*" />
 
-    <icon src="public/img/Logo.png" width="72" height="72" />
-    <icon src="public/img/Logo.png" width="48" height="48" />
-    <icon src="public/img/Logo.png" width="36" height="36" />
+    <gap:config-file platform="ios" parent="CFBundleShortVersionString"> 
+        <string>100</string>
+    </gap:config-file>  
 
-    <gap:splash src="res/screen/android/screen-ldpi-portrait.png"       gap:platform="android" gap:qualifier="port-ldpi" />
-    <gap:splash src="res/screen/android/screen-mdpi-portrait.png"       gap:platform="android" gap:qualifier="port-mdpi" />
-    <gap:splash src="res/screen/android/screen-hdpi-portrait.png"       gap:platform="android" gap:qualifier="port-hdpi" />
-    <gap:splash src="res/screen/android/screen-xhdpi-portrait.png"      gap:platform="android" gap:qualifier="port-xhdpi" />
-    <gap:splash src="res/screen/blackberry/screen-225.png"              gap:platform="blackberry" />
-    <gap:splash src="res/screen/ios/screen-iphone-portrait.png"         gap:platform="ios"     width="320" height="480" />
-    <gap:splash src="res/screen/ios/screen-iphone-portrait-2x.png"      gap:platform="ios"     width="640" height="960" />
-    <gap:splash src="res/screen/ios/screen-iphone-portrait-568h-2x.png" gap:platform="ios"     width="640" height="1136" />
-    <gap:splash src="res/screen/ios/screen-ipad-portrait.png"           gap:platform="ios"     width="768" height="1024" />
-    <gap:splash src="res/screen/ios/screen-ipad-landscape.png"          gap:platform="ios"     width="1024" height="768" />
-    <gap:splash src="res/screen/windows-phone/screen-portrait.jpg"      gap:platform="winphone" />
+    <gap:config-file platform="ios" parent="UIStatusBarStyle" mode="delete"/> 
+
+    <gap:config-file platform="android" parent="/manifest"> 
+        <supports-screens android:xlargeScreens="false" android:largeScreens="false" android:smallScreens="false" />
+    </gap:config-file>
 
     <gap:config-file platform="android" parent="/manifest" mode="delete">
         <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -77,10 +71,13 @@
 
         <uses-permission android:name="android.permission.READ_CALENDAR" />
     </gap:config-file>
+ 
+    <preference name="phonegap-version"           value="cli-6.5.0" />           
+    <preference name="orientation"                value="portrait" />        
+    <preference name="target-device"              value="universal" />      <!-- all: possible values handset, tablet, or universal -->
+    <preference name="fullscreen"                 value="true" />           <!-- all: hides the status bar at the top of the screen -->
+    <preference name="load-url-timeout"           value="1000" />
 
-    <gap:config-file platform="ios" parent="CFBundleShortVersionString">
-        <string>100</string>
-    </gap:config-file>
 
     <preference name="android-build-tool" value="gradle" /> 
     <preference name="android-minSdkVersion" value="21" />
@@ -88,6 +85,22 @@
     <preference name="keepRunning" value="true" />
     <preference name="showmessageinnotification" value="true" />
     
+    <icon src="public/img/Logo.png" width="72" height="72" />
+    <icon src="public/img/Logo.png" width="48" height="48" />
+    <icon src="public/img/Logo.png" width="36" height="36" />
+
+    <gap:splash src="res/screen/android/screen-ldpi-portrait.png"       gap:platform="android" gap:qualifier="port-ldpi" />
+    <gap:splash src="res/screen/android/screen-mdpi-portrait.png"       gap:platform="android" gap:qualifier="port-mdpi" />
+    <gap:splash src="res/screen/android/screen-hdpi-portrait.png"       gap:platform="android" gap:qualifier="port-hdpi" />
+    <gap:splash src="res/screen/android/screen-xhdpi-portrait.png"      gap:platform="android" gap:qualifier="port-xhdpi" />
+    <gap:splash src="res/screen/blackberry/screen-225.png"              gap:platform="blackberry" />
+    <gap:splash src="res/screen/ios/screen-iphone-portrait.png"         gap:platform="ios"     width="320" height="480" />
+    <gap:splash src="res/screen/ios/screen-iphone-portrait-2x.png"      gap:platform="ios"     width="640" height="960" />
+    <gap:splash src="res/screen/ios/screen-iphone-portrait-568h-2x.png" gap:platform="ios"     width="640" height="1136" />
+    <gap:splash src="res/screen/ios/screen-ipad-portrait.png"           gap:platform="ios"     width="768" height="1024" />
+    <gap:splash src="res/screen/ios/screen-ipad-landscape.png"          gap:platform="ios"     width="1024" height="768" />
+    <gap:splash src="res/screen/windows-phone/screen-portrait.jpg"      gap:platform="winphone" />
+
     <access origin="*"/>
 
     <allow-intent href="http://*/*" />
