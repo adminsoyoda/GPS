@@ -33,11 +33,12 @@
     <plugin name="cordova-plugin-splashscreen" source="npm" spec="~3.2.1"/>
     <plugin name="cordova-plugin-vibration" source="npm" spec="~2.1.0"/>
     <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1"/>
-    <gap:plugin name="cordova-plugin-datepicker" source="npm" />
     <plugin spec="https://github.com/phonegap-build/PushPlugin.git" source="git"/>
     <plugin name="cordova.plugins.diagnostic" source="npm" version="2.2.4" />
     <plugin name="plugin_open_gps" source="npm" version="1.1.8" />
     <plugin name="cordova-plugin-file" version="*" />
+
+    <gap:plugin name="cordova-plugin-datepicker" source="npm" />
 
     <gap:config-file platform="ios" parent="CFBundleShortVersionString"> 
         <string>100</string>
@@ -46,7 +47,7 @@
     <gap:config-file platform="ios" parent="UIStatusBarStyle" mode="delete"/> 
 
     <gap:config-file platform="android" parent="/manifest"> 
-        <supports-screens android:xlargeScreens="false" android:largeScreens="false" android:smallScreens="false" />
+        <!--<supports-screens android:xlargeScreens="false" android:largeScreens="false" android:smallScreens="false" />-->
     </gap:config-file>
 
     <gap:config-file platform="android" parent="/manifest" mode="delete">
@@ -73,6 +74,10 @@
     </gap:config-file>
  
     <preference name="phonegap-version"           value="cli-6.5.0" />           
+    <preference name="orientation"                value="portrait" />        
+    <preference name="target-device"              value="universal" />      <!-- all: possible values handset, tablet, or universal -->
+    <preference name="fullscreen"                 value="true" />           <!-- all: hides the status bar at the top of the screen -->
+    <preference name="load-url-timeout"           value="1000" />
 
 
     <preference name="android-build-tool" value="gradle" /> 
@@ -107,7 +112,7 @@
     <allow-intent href="geo:*" />
 
     <platform name="android">
-        
+        <allow-intent href="market:*" />
     </platform>
 
     <platform name="ios">
