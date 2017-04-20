@@ -1,22 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         xmlns:android   = "http://schemas.android.com/apk/res/android"
-        id        = "TEST.com.fetch1.app"
-        version   = "2.0.1">
-    <name>PGB Tester</name>
-
+        id        = "com.phonegap.helloworld"
+        version   = "1.0.0">
+    <name>GPS</name>
     <description>
-        Tests shit from PhoneGap Build.
+      Sistema de Asesoria Comercial
     </description>
 
-    <author href="http://phonegap.com" email="support@phonegap.com">
-        PhoneGap Team
+    <author href="http://www.soyoda.com" email="sistemas@soyodaecuador.com">
+      Desarrollo Soyoda
     </author>
 
-    <!-- third party plugins -->
- 
-    <!-- core plugins -->
     <plugin name="cordova-custom-config" version="*" />
     <plugin name="cordova-plugin-battery-status" source="npm" spec="~1.1.1"/>
     <plugin name="cordova-plugin-camera" source="npm" spec="~2.1.1"/>
@@ -70,21 +66,18 @@
         <uses-permission android:name="android.permission.READ_CONTACTS" />
 
         <uses-permission android:name="android.permission.READ_CALENDAR" />
+        
     </gap:config-file>
  
-    <!-- icons -->
-    <!-- Define app icon for each platform. -->
-    <icon src="icon.png" />
-    <icon src="res/icon/android/icon-36-ldpi.png"   gap:platform="android"    gap:density="ldpi" />
-    <icon src="res/icon/android/icon-48-mdpi.png"   gap:platform="android"    gap:density="mdpi" />
-    <icon src="res/icon/android/icon-72-hdpi.png"   gap:platform="android"    gap:density="hdpi" />
-    <icon src="res/icon/android/icon-96-xhdpi.png"  gap:platform="android"    gap:density="xhdpi" />
+    <icon src="public/img/Logo.png" width="72" height="72" />
+    <icon src="public/img/Logo.png" width="48" height="48" />
+    <icon src="public/img/Logo.png" width="36" height="36" />
 
-    <!-- Define app splash screen for each platform. -->
-    <gap:splash src="res/screen/android/screen-ldpi-portrait.png"       gap:platform="android" gap:density="ldpi" />
-    <gap:splash src="res/screen/android/screen-mdpi-portrait.png"       gap:platform="android" gap:density="mdpi" />
-    <gap:splash src="res/screen/android/screen-hdpi-portrait.png"       gap:platform="android" gap:density="hdpi" />
-    <gap:splash src="res/screen/android/screen-xhdpi-portrait.png"      gap:platform="android" gap:density="xhdpi" />
+    <gap:splash src="res/screen/android/screen-ldpi-portrait.png"       gap:platform="android" gap:qualifier="port-ldpi" />
+    <gap:splash src="res/screen/android/screen-mdpi-portrait.png"       gap:platform="android" gap:qualifier="port-mdpi" />
+    <gap:splash src="res/screen/android/screen-hdpi-portrait.png"       gap:platform="android" gap:qualifier="port-hdpi" />
+    <gap:splash src="res/screen/android/screen-xhdpi-portrait.png"      gap:platform="android" gap:qualifier="port-xhdpi" />
+    <gap:splash src="res/screen/blackberry/screen-225.png"              gap:platform="blackberry" />
     <gap:splash src="res/screen/ios/screen-iphone-portrait.png"         gap:platform="ios"     width="320" height="480" />
     <gap:splash src="res/screen/ios/screen-iphone-portrait-2x.png"      gap:platform="ios"     width="640" height="960" />
     <gap:splash src="res/screen/ios/screen-iphone-portrait-568h-2x.png" gap:platform="ios"     width="640" height="1136" />
@@ -92,7 +85,10 @@
     <gap:splash src="res/screen/ios/screen-ipad-landscape.png"          gap:platform="ios"     width="1024" height="768" />
     <gap:splash src="res/screen/windows-phone/screen-portrait.jpg"      gap:platform="winphone" />
 
-    <!-- content src="http://www.w3.org/2010/05/video/mediaevents.html" / -->
+    <preference name="keepRunning" value="true" />
+    <preference name="showmessageinnotification" value="true" />
+    <access origin="*"/>
+
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -108,4 +104,5 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+
 </widget>
