@@ -42,11 +42,11 @@
     <plugin name="plugin_open_gps" source="npm" version="1.1.8" />
     <plugin name="cordova-plugin-file" version="*" />
 
-    <gap:config-file platform="ios" parent="NSLocationWhenInUseUsageDescription" mode="replace"> 
-        <string>OMG</string> 
-    </gap:config-file>  
+    <gap:plugin name="cordova-plugin-datepicker" source="npm" />
 
-    <gap:config-file platform="ios" parent="UIStatusBarStyle" mode="delete"/> 
+    <gap:config-file platform="ios" parent="CFBundleShortVersionString"> 
+        <string>100</string>
+    </gap:config-file>  
 
 
     <gap:config-file platform="android" parent="/manifest" mode="delete">
@@ -79,12 +79,6 @@
     <icon src="res/icon/android/icon-48-mdpi.png"   gap:platform="android"    gap:density="mdpi" />
     <icon src="res/icon/android/icon-72-hdpi.png"   gap:platform="android"    gap:density="hdpi" />
     <icon src="res/icon/android/icon-96-xhdpi.png"  gap:platform="android"    gap:density="xhdpi" />
-    <icon src="res/icon/ios/icon-57.png"            gap:platform="ios"        width="57" height="57" />
-    <icon src="res/icon/ios/icon-72.png"            gap:platform="ios"        width="72" height="72" />
-    <icon src="res/icon/ios/icon-57-2x.png"         gap:platform="ios"        width="114" height="114" />
-    <icon src="res/icon/ios/icon-72-2x.png"         gap:platform="ios"        width="144" height="144" />
-    <icon src="res/icon/windows-phone/icon-48.png"  gap:platform="winphone" />
-    <icon src="res/icon/windows-phone/icon-173.png" gap:platform="winphone"   gap:role="background" />
 
     <!-- Define app splash screen for each platform. -->
     <gap:splash src="res/screen/android/screen-ldpi-portrait.png"       gap:platform="android" gap:density="ldpi" />
