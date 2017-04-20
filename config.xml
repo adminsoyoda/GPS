@@ -68,13 +68,6 @@
         <uses-permission android:name="android.permission.READ_CALENDAR" />
     </gap:config-file>
  
-    <preference name="phonegap-version"           value="cli-6.5.0" />           
-    <preference name="orientation"                value="portrait" />        
-    <preference name="target-device"              value="universal" />      <!-- all: possible values handset, tablet, or universal -->
-
-    <preference name="android-build-tool" value="gradle" /> 
-    
-
     <icon src="public/img/Logo.png" width="72" height="72" />
     <icon src="public/img/Logo.png" width="48" height="48" />
     <icon src="public/img/Logo.png" width="36" height="36" />
