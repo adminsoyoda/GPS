@@ -1,93 +1,80 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
+<widget
+        id="cordova.plugins.diagnostic.example"
+        version="3.5.0"
+        xmlns="http://www.w3.org/ns/widgets"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>GPS</name>
+    <description>
+        An example app that demonstrates use of cordova.plugins.diagnostic
+    </description>
+    <author email="dave@workingedge.co.uk" href="http://www.workingedge.co.uk/dave">
+        Dave Alden
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
 
-<!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
-<widget xmlns     = "http://www.w3.org/ns/widgets"
-        xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.phonegap.helloworld"
-        version   = "1.0.0">
+    <preference name="Fullscreen" value="false" />
+    <preference name="phonegap-version" value="cli-6.4.0" /> <!-- Phonegap Build only -->
 
-<name>SAC Lite</name>
-<description>
-  Sistema de Asesoria Comercial
-</description>
+    <plugin name="cordova-plugin-whitelist" version="*" />
+    <plugin name="cordova-plugin-device" version="*" />
+    <plugin name="cordova-custom-config" version="*" />
+    <plugin name="cordova-plugin-geolocation" version="2.1.0" />
+    <plugin name="cordova-plugin-camera" version="2.1.0" />
 
-<author href="http://www.soyoda.com" email="sistemas@soyodaecuador.com">
-  Desarrollo Soyoda
-</author>
+    <plugin name="cordova.plugins.diagnostic" version="*" />
+    <!--<plugin spec="https://github.com/dpa99c/cordova-diagnostic-plugin.git#dev" source="git" />-->
 
+    <platform name="android">
+        <plugin name="cordova-plugin-file" version="*" />
 
-<!-- Core plugins -->
-  <plugin name="cordova-plugin-battery-status" source="npm" spec="~1.1.1"/>
-  <plugin name="cordova-plugin-camera" source="npm" spec="~2.1.1"/>
-  <plugin name="cordova-plugin-media-capture" source="npm" spec="~1.2.0"/>
-  <plugin name="cordova-plugin-console" source="npm" spec="~1.0.2"/>
-  <plugin name="cordova-plugin-contacts" source="npm" spec="~2.0.1"/>
-  <plugin name="cordova-plugin-device" source="npm" spec="~1.1.1"/>
-  <plugin name="cordova-custom-config" version="*" />
-  <plugin name="cordova-plugin-device-motion" source="npm" spec="~1.2.0"/>
-  <plugin name="cordova-plugin-device-orientation" source="npm" spec="~1.0.2"/>
-  <plugin name="cordova-plugin-dialogs" source="npm" spec="~1.2.0"/>
-  <plugin name="cordova-plugin-file" source="npm" spec="~4.1.1"/>
-  <plugin name="cordova-plugin-file-transfer" source="npm" spec="~1.5.0"/>
-  <plugin name="cordova-plugin-geolocation" source="npm" spec="~2.1.0"/>
-  <plugin name="cordova-plugin-globalization" source="npm" spec="~1.0.3"/>
-  <plugin name="cordova-plugin-inappbrowser" source="npm" spec="~1.3.0"/>
-  <plugin name="cordova-plugin-media" source="npm" spec="~2.2.0"/>
-  <plugin name="cordova-plugin-network-information" source="npm" spec="~1.2.0"/>
-  <plugin name="cordova-plugin-splashscreen" source="npm" spec="~3.2.1"/>
-  <plugin name="cordova-plugin-vibration" source="npm" spec="~2.1.0"/>
-  <plugin name="cordova-plugin-whitelist" source="npm" spec="~1.2.1"/>
-  <gap:plugin name="cordova-plugin-datepicker" source="npm" />
+        <preference name="android-build-tool" value="gradle" /> <!-- Phonegap Build only -->
+        
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.BLUETOOTH" />
+            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
-  <plugin name="cordova-plugin-file" version="*" />
-  
-  <plugin spec="https://github.com/phonegap-build/PushPlugin.git" source="git"/>
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+            <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
 
-  <plugin name="cordova.plugins.diagnostic" source="npm" version="2.2.4" /><!--verificar estados de los dispositivos-->
-  <plugin name="plugin_open_gps" source="npm" version="1.1.8" /><!--verificar estados de los dispositivos por soyoda-->
+            <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-<!-- Define app icon for each platform. -->
-<icon src="public/img/Logo.png" width="72" height="72" />
-<icon src="public/img/Logo.png" width="48" height="48" />
-<icon src="public/img/Logo.png" width="36" height="36" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 
-<!-- Define app splash screen for each platform. -->
-<gap:splash src="res/screen/android/screen-ldpi-portrait.png"       gap:platform="android" gap:qualifier="port-ldpi" />
-<gap:splash src="res/screen/android/screen-mdpi-portrait.png"       gap:platform="android" gap:qualifier="port-mdpi" />
-<gap:splash src="res/screen/android/screen-hdpi-portrait.png"       gap:platform="android" gap:qualifier="port-hdpi" />
-<gap:splash src="res/screen/android/screen-xhdpi-portrait.png"      gap:platform="android" gap:qualifier="port-xhdpi" />
-<gap:splash src="res/screen/blackberry/screen-225.png"              gap:platform="blackberry" />
-<gap:splash src="res/screen/ios/screen-iphone-portrait.png"         gap:platform="ios"     width="320" height="480" />
-<gap:splash src="res/screen/ios/screen-iphone-portrait-2x.png"      gap:platform="ios"     width="640" height="960" />
-<gap:splash src="res/screen/ios/screen-iphone-portrait-568h-2x.png" gap:platform="ios"     width="640" height="1136" />
-<gap:splash src="res/screen/ios/screen-ipad-portrait.png"           gap:platform="ios"     width="768" height="1024" />
-<gap:splash src="res/screen/ios/screen-ipad-landscape.png"          gap:platform="ios"     width="1024" height="768" />
-<gap:splash src="res/screen/windows-phone/screen-portrait.jpg"      gap:platform="winphone" />
+            <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-<gap:config-file platform="ios" parent="CFBundleShortVersionString">
-<string>100</string>
-</gap:config-file>
+            <uses-permission android:name="android.permission.READ_CALENDAR" />
+        </config-file>
+    </platform>
 
+    <platform name="ios">
+        <plugin spec="https://github.com/transistorsoft/cordova-plugin-background-fetch.git#3.0.4" source="git" />
+        <plugin name="phonegap-plugin-push" version="*">
+            <param name="SENDER_ID" value="12345678" />
+        </plugin>
 
-<preference name="keepRunning" value="true" />
-<preference name="showmessageinnotification" value="true" />
-<access origin="*"/>
-<!-- Added the following intents to support the removal of whitelist code from base cordova to a plugin -->
-<!-- Whitelist configuration. Refer to https://cordova.apache.org/docs/en/edge/guide_appdev_whitelist_index.md.html -->
+        <!-- Set properties for remote notifications -->
+        <config-file platform="ios" target="*-Info.plist" parent="UIBackgroundModes">
+            <array>
+                <string>fetch</string>
+                <string>remote-notification</string>
+            </array>
+        </config-file>
 
-<allow-intent href="http://*/*" />
-<allow-intent href="https://*/*" />
-<allow-intent href="tel:*" />
-<allow-intent href="sms:*" />
-<allow-intent href="mailto:*" />
-<allow-intent href="geo:*" />
-<platform name="android">
-<allow-intent href="market:*" />
-</platform>
-<platform name="ios">
-<allow-intent href="itms:*" />
-<allow-intent href="itms-apps:*" />
-</platform>
+    </platform>
 
+    <platform name="windows">
+        <preference name="windows-target-version" value="10.0" />
+        <preference name="target-device" value="universal" />
+        <preference name="Windows.Universal-MinVersion" value="10.0.0.0" />
+    </platform>
 </widget>
