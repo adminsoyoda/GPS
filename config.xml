@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
+        xmlns:android   = "http://schemas.android.com/apk/res/android"
         id        = "com.phonegap.helloworld"
         version   = "1.0.0">
     <name>GPS</name>
@@ -72,10 +73,6 @@
     </gap:config-file>
  
     <preference name="phonegap-version"           value="cli-6.5.0" />           
-    <preference name="orientation"                value="portrait" />        
-    <preference name="target-device"              value="universal" />      <!-- all: possible values handset, tablet, or universal -->
-    <preference name="fullscreen"                 value="true" />           <!-- all: hides the status bar at the top of the screen -->
-    <preference name="load-url-timeout"           value="1000" />
 
 
     <preference name="android-build-tool" value="gradle" /> 
@@ -110,7 +107,7 @@
     <allow-intent href="geo:*" />
 
     <platform name="android">
-        <allow-intent href="market:*" />
+        
     </platform>
 
     <platform name="ios">
