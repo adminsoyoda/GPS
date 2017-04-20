@@ -1,214 +1,73 @@
-BackgroundGeoLocation
-==============================
-
-Cross-platform background geolocation for Cordova / PhoneGap with battery-saving "circular region monitoring" and "stop detection".
-
-Follows the [Cordova Plugin spec](https://github.com/apache/cordova-plugman/blob/master/plugin_spec.md), so that it works with [Plugman](https://github.com/apache/cordova-plugman).
-
-This plugin leverages Cordova/PhoneGap's [require/define functionality used for plugins](http://simonmacdonald.blogspot.ca/2012/08/so-you-wanna-write-phonegap-200-android.html). 
-
-## Using the plugin ##
-The plugin creates the object `window.plugins.backgroundGeoLocation` with the methods 
+Cordova/Phonegap Diagnostic Plugin Example
+==========================================
 
-  `configure(success, fail, option)`, 
+This repo contains an example project which illustrates use of the [Diagnostic Cordova/Phonegap plugin](https://github.com/dpa99c/cordova-diagnostic-plugin).
 
-  `start(success, fail)`
+<!-- START table-of-contents -->
+**Table of Contents**
 
-  `stop(success, fail)`. 
+- [Important Android Note](#important-android-note)
+- [Downloading](#downloading)
+- [Building and running](#building-and-running)
+  - [Testing Android runtime permissions](#testing-android-runtime-permissions)
+- [Screenshots](#screenshots)
+  - [Android](#android)
+  - [iOS](#ios)
+- [License](#license)
 
-## Installing the plugin ##
+<!-- END table-of-contents -->
 
-```
+# Important Android Note
 
-   cordova plugin add https://github.com/christocracy/cordova-plugin-background-geolocation.git
-```
+The [master branch of the diagnostic plugin](https://github.com/dpa99c/cordova-diagnostic-plugin) now supports Android 6 runtime permissions. The introduces a dependency which means that the project must be built against API 23 or above.
 
-A full example could be:
-```
-    //
-    //
-    // after deviceready
-    //
-    //
+For users who wish to build against API 22 or below, there is a branch of the plugin repo which contains all the functionality __except Android 6 runtime permissions__. This removes the dependency on API 23 and will allow you to build against legacy API versions (22 and below).
 
-    // Your app must execute AT LEAST ONE call for the current position via standard Cordova geolocation,
-    //  in order to prompt the user for Location permission.
-    window.navigator.geolocation.getCurrentPosition(function(location) {
-        console.log('Location from Phonegap');
-    });
+There is also a corresponding branch of this project intended to be built with the legacy plugin version: [https://github.com/dpa99c/cordova-diagnostic-plugin-example/tree/api-22](https://github.com/dpa99c/cordova-diagnostic-plugin-example/tree/api-22)
 
-    var bgGeo = window.plugins.backgroundGeoLocation;
+**NOTE**: Phonegap Build now supports API 23, so its users may use the main plugin branch (`cordova.plugins.diagnostic`).
 
-    /**
-    * This would be your own callback for Ajax-requests after POSTing background geolocation to your server.
-    */
-    var yourAjaxCallback = function(response) {
-        ////
-        // IMPORTANT:  You must execute the #finish method here to inform the native plugin that you're finished,
-        //  and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
-        // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
-        //
-        //
-        bgGeo.finish();
-    };
+# Downloading
 
-    /**
-    * This callback will be executed every time a geolocation is recorded in the background.
-    */
-    var callbackFn = function(location) {
-        console.log('[js] BackgroundGeoLocation callback:  ' + location.latitude + ',' + location.longitude);
-        // Do your HTTP request here to POST location to your server.
-        //
-        //
-        yourAjaxCallback.call(this);
-    };
+To download the example project, clone it using git:
 
-    var failureFn = function(error) {
-        console.log('BackgroundGeoLocation error');
-    }
-    
-    // BackgroundGeoLocation is highly configurable.
-    bgGeo.configure(callbackFn, failureFn, {
-        url: 'http://only.for.android.com/update_location.json', // <-- Android ONLY:  your server url to send locations to 
-        params: {                                               //  <-- Android ONLY:  HTTP POST params sent to your server when persisting locations.
-            auth_token: 'user_secret_auth_token',
-            foo: 'bar'
-        },
-        headers: {                                              // <-- Android ONLY:  Optional HTTP headers sent to your configured #url when persisting locations
-            "X-Foo": "BAR"
-        },
-        desiredAccuracy: 10,
-        stationaryRadius: 20,
-        distanceFilter: 30,
-        notificationTitle: 'Background tracking', // <-- android only, customize the title of the notification
-        notificationText: 'ENABLED', // <-- android only, customize the text of the notification
-        activityType: 'AutomotiveNavigation',
-        debug: true // <-- enable this hear sounds for background-geolocation life-cycle.
-    });
+    $ git clone https://github.com/dpa99c/cordova-diagnostic-plugin-example
 
-    // Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app.
-    bgGeo.start();
+# Building and running
 
-    // If you wish to turn OFF background-tracking, call the #stop method.
-    // bgGeo.stop()
+The plugin currently supports the Android and iOS platforms.
 
+For example, to run on the Android platform, execute the following commands from the project root:
 
-```
+- Install the API 23 platform into the project: `$ cordova platform add android@5`
+- Build and run the project: `$ cordova run android`
 
-NOTE: The plugin includes `org.apache.cordova.geolocation` as a dependency.  You must enable Cordova's GeoLocation in the foreground and have the user accept Location services by executing `#watchPosition` or `#getCurrentPosition`.
+## Testing Android runtime permissions
 
-## Behaviour
+If you want to test out Android runtime permissions, you need to run the example app on a device/emulator the app is running on has Android 6.0.
 
-The plugin has features allowing you to control the behaviour of background-tracking, striking a balance between accuracy and battery-usage.  In stationary-mode, the plugin attempts to descrease its power usage and accuracy by setting up a circular stationary-region of configurable #stationaryRadius.  iOS has a nice system  [Significant Changes API](https://developer.apple.com/library/ios/documentation/CoreLocation/Reference/CLLocationManager_Class/CLLocationManager/CLLocationManager.html#//apple_ref/occ/instm/CLLocationManager/startMonitoringSignificantLocationChanges), which allows the os to suspend your app until a cell-tower change is detected (typically 2-3 city-block change) Android uses [LocationManager#addProximityAlert](http://developer.android.com/reference/android/location/LocationManager.html).
+Note: If the app is run on Android 5.1 (API 22)  or below, runtime permissions do not apply - all permissions are granted at installation time.
 
-When the plugin detects your user has moved beyond his stationary-region, it engages the native platform's geolocation system for aggressive monitoring according to the configured `#desiredAccuracy`, `#distanceFilter` and `#locationTimeout`.  The plugin attempts to intelligently scale `#distanceFilter` based upon the current reported speed.  Each time `#distanceFilter` is determined to have changed by 5m/s, it recalculates it by squaring the speed rounded-to-nearest-five and adding #distanceFilter (I arbitrarily came up with that formula.  Better ideas?).
 
-  `(round(speed, 5))^2 + distanceFilter`
+# Screenshots
 
-## iOS and Android
+## Android
 
-The plugin works with iOS and Android, however both platforms differ significantly in their interaction with server.
+![Android screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/android_1.png)
+![Android screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/android_2.png)
+![Android screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/android_3.png)
 
-### iOS
+## iOS
 
-*Only* on iOS will the plugin execute your configured ```callbackFn```.  You may manually POST the received ```GeoLocation``` to your server using standard XHR.  iOS ignores the @config params ```url```, ```params``` and ```headers```.
+![iOS screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/ios_1.png)
+![iOS screenshot](https://raw.githubusercontent.com/dpa99c/cordova-diagnostic-plugin-example/master/screenshots/ios_2.png)
 
-### Android
-
-Android **WILL NOT** execute your configured ```callbackFn```.  The plugin manages sync-ing GeoLocations to your server automatically, using the configured ```url```, ```params``` and ```headers```.  Since the Android plugin must run as an autonomous Background Service, disconnected from your the main Android Activity (your foreground application), the background-geolocation plugin will continue to run, even if the foreground Activity is killed due to memory constraints.  This is why the Android plugin cannot execute the Javascript ```callbackFn```, since your app is not guaranteed to keep running -- syncing locations to the server must be handled by the plugin.
-
-### Config
-
-Use the following config-parameters with the #configure method:
-
-#####`@param {Integer} desiredAccuracy [0, 10, 100, 1000] in meters`
-
-The lower the number, the more power devoted to GeoLocation resulting in higher accuracy readings.  1000 results in lowest power drain and least accurate readings.  @see [Apple docs](https://developer.apple.com/library/ios/documentation/CoreLocation/Reference/CLLocationManager_Class/CLLocationManager/CLLocationManager.html#//apple_ref/occ/instp/CLLocationManager/desiredAccuracy)
-
-#####`@param {Integer} stationaryRadius (meters)`
-
-When stopped, the minimum distance the device must move beyond the stationary location for aggressive background-tracking to engage.  Note, since the plugin uses iOS significant-changes API, the plugin cannot detect the exact moment the device moves out of the stationary-radius.  In normal conditions, it can take as much as 3 city-blocks to 1/2 km before staionary-region exit is detected.
-
-#####`@param {Boolean} debug`
-
-When enabled, the plugin will emit sounds for life-cycle events of background-geolocation!  **NOTE iOS**:  In addition, you must manually enable the *Audio and Airplay* background mode in *Background Capabilities* to hear these debugging sounds.
-
-- Exit stationary region:  *[ios]* Calendar event notification sound *[android]* dialtone beep-beep-beep
-- GeoLocation recorded:  *[ios]* SMS sent sound, *[android]* tt short beep
-- Aggressive geolocation engaged:  *[ios]* SIRI listening sound, *[android]* none
-- Passive geolocation engaged:  *[ios]* SIRI stop listening sound, *[android]* none
-- Acquiring stationary location sound: *[ios]* "tick,tick,tick" sound, *[android]* none
-- Stationary location acquired sound:  *[ios]* "bloom" sound, *[android]* long tt beep.
-
-![Enable Background Audio](/enable-background-audio.png "Enable Background Audio")
-
-#####`@param {Integer} distanceFilter`
-
-The minimum distance (measured in meters) a device must move horizontally before an update event is generated.  @see [Apple docs](https://developer.apple.com/library/ios/documentation/CoreLocation/Reference/CLLocationManager_Class/CLLocationManager/CLLocationManager.html#//apple_ref/occ/instp/CLLocationManager/distanceFilter).  However, #distanceFilter is elastically auto-calculated by the plugin:  When speed increases, #distanceFilter increases;  when speed decreases, so does distanceFilter.
-
-distanceFilter is calculated as the square of speed-rounded-to-nearest-5 and adding configured #distanceFilter.
-
-  `(round(speed, 5))^2 + distanceFilter`
-
-For example, at biking speed of 7.7 m/s with a configured distanceFilter of 30m:
-
-  `=> round(7.7, 5)^2 + 30`
-  `=> (10)^2 + 30`
-  `=> 100 + 30`
-  `=> 130`
-
-A gps location will be recorded each time the device moves 130m.
-
-At highway speed of 30 m/s with distanceFilter: 30,
-
-  `=> round(30, 5)^2 + 30`
-  `=> (30)^2 + 30`
-  `=> 900 + 30`
-  `=> 930`
-
-A gps location will be recorded every 930m
-
-Note the following real example of background-geolocation on highway 101 towards San Francisco as the driver slows down as he runs into slower traffic (geolocations become compressed as distanceFilter decreases)
-
-![distanceFilter at highway speed](/distance-filter-highway.png "distanceFilter at highway speed")
-
-Compare now background-geolocation in the scope of a city.  In this image, the left-hand track is from a cab-ride, while the right-hand track is walking speed.
-
-![distanceFilter at city scale](/distance-filter-city.png "distanceFilter at city scale")
-
-### Android Config
-
-#####`@param {String} url`
-
-The url which the Android plugin will persist background geolocation to
-
-#####`@param {Object} params`
-
-Optional HTTP params POSTed to your server when persisting locations (eg:  auth_token)
-
-#####`@param {Object} headers`
-
-Optional HTTP headers POSTed to your server when persisting locations
-
-#####`@param {String} notificationText/Title`
-
-On Android devices it is required to have a notification in the drawer because it's a "foreground service".  This gives it high priority, decreasing probability of OS killing it.  To customize the title and text of the notification, set these options.
-
-#####`@param {Integer} locationTimeout 
-
-The minimum time interval between location updates, in seconds.  See [Android docs](http://developer.android.com/reference/android/location/LocationManager.html#requestLocationUpdates(long,%20float,%20android.location.Criteria,%20android.app.PendingIntent)) for more information.
-
-### iOS Config
-
-#####`@param {String} activityType [AutomotiveNavigation, OtherNavigation, Fitness, Other]`
-
-Presumably, this affects ios GPS algorithm.  See [Apple docs](https://developer.apple.com/library/ios/documentation/CoreLocation/Reference/CLLocationManager_Class/CLLocationManager/CLLocationManager.html#//apple_ref/occ/instp/CLLocationManager/activityType) for more information
-
-## Licence ##
+# License
+================
 
 The MIT License
 
-Copyright (c) 2013 Chris Scott and Brian Samson
+Copyright (c) 2015 Dave Alden / Working Edge Ltd.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
