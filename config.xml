@@ -21,7 +21,6 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
 
-
     <preference name="Fullscreen" value="false" />
     <preference name="phonegap-version" value="cli-6.4.0" /> <!-- Phonegap Build only -->
     <preference name="keepRunning" value="true" />
@@ -33,6 +32,7 @@
     <plugin name="cordova-plugin-geolocation" version="2.1.0" />
     <plugin name="cordova-plugin-camera" version="2.1.0" />
     <plugin name="cordova.plugins.diagnostic" version="*" />
+    <plugin name="cordova-plugin-request-location-accuracy" version="2.1" />
 
     <platform name="android">
         <plugin name="cordova-plugin-file" version="*" />
